@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noman Education | অনলাইন শিক্ষা</title>
+<style>
+:root{--navy:#14213d;--blue:#2563eb;--teal:#0f766e;--bg:#f4f7fb;--line:#dbe3ef;--muted:#64748b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#172033;font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;line-height:1.6}
+header{background:linear-gradient(120deg,#14213d,#2563eb);color:white;padding:20px 15px}header .wrap{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{margin:0;font-size:clamp(24px,4vw,35px)}header p{margin:4px 0 0;color:#e5edff}
+main{max-width:1100px;margin:18px auto;padding:0 14px}.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:15px;box-shadow:0 4px 16px #14213d08}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}label{display:block;font-weight:700;font-size:14px;margin:7px 0 4px}
+input,select,textarea,button{font:inherit;border:1px solid var(--line);border-radius:9px;padding:10px;width:100%;background:white;color:#172033}textarea{min-height:90px;resize:vertical}button{background:var(--blue);color:white;border:0;font-weight:700;cursor:pointer}button.secondary{background:#e8efff;color:#1d4ed8}button.green{background:var(--teal)}button.red{background:#b91c1c}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.tabs button{width:auto}.tabs .active{background:var(--navy)}.hidden{display:none!important}.muted{color:var(--muted)}.tag{display:inline-block;background:#e8efff;color:#1d4ed8;border-radius:99px;padding:3px 9px;font-size:12px;margin:2px}
+.note{background:#ecfdf5;border-left:4px solid var(--teal);border-radius:8px;padding:12px;margin:10px 0}.formula{background:#f1f5f9;border-radius:8px;padding:10px;margin:8px 0;font-weight:700}
+.question{border:1px solid var(--line);border-radius:11px;padding:13px;margin:10px 0}.options{display:grid;gap:7px;margin-top:8px}.options button{background:#f8fafc;color:#172033;border:1px solid var(--line);text-align:left;font-weight:500}.options button.correct{background:#dcfce7;border-color:#22c55e}.options button.wrong{background:#fee2e2;border-color:#ef4444}
+.status{padding:10px;border-radius:8px;background:#eff6ff;margin:10px 0}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.right{display:flex;gap:8px;align-items:center}.right button{width:auto}.small{font-size:13px}
+@media(max-width:600px){.two{grid-template-columns:1fr}.panel{padding:13px}.tabs button{flex:1}}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div><h1>📘 Noman Education</h1><p>শ্রেণি ৮–১০ · গণিত · English · বাংলা · বিজ্ঞান</p></div><div class="right"><span id="who" class="small">লগইন করা হয়নি</span><button id="logout" class="secondary hidden">লগআউট</button></div></div></header>
+<main>
+<section id="configWarning" class="panel hidden"><h2>প্রাথমিক সেটআপ বাকি</h2><p>Firebase config বসানো হয়নি। README_BN.txt-এর নির্দেশনা অনুসরণ করে <code>firebase-config.js</code> ফাইলে Firebase project-এর config বসাও।</p></section>
+<section id="authPanel" class="panel"><h2>🔐 লগইন / অ্যাকাউন্ট তৈরি</h2><p class="muted">শিক্ষার্থী অ্যাকাউন্ট তৈরি করে নোট ও কুইজ ব্যবহার করতে পারবে। শিক্ষক/অ্যাডমিনের অনুমতি Firebase Console থেকে সেট করতে হবে।</p>
+<div class="two"><div><h3>লগইন</h3><label>ইমেইল</label><input id="loginEmail" type="email" autocomplete="email"><label>পাসওয়ার্ড</label><input id="loginPassword" type="password" autocomplete="current-password"><button id="loginBtn">লগইন</button></div>
+<div><h3>নতুন অ্যাকাউন্ট</h3><label>নাম</label><input id="signupName" autocomplete="name"><label>ইমেইল</label><input id="signupEmail" type="email" autocomplete="email"><label>পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label><input id="signupPassword" type="password" autocomplete="new-password"><button id="signupBtn" class="green">শিক্ষার্থী অ্যাকাউন্ট তৈরি</button></div></div><p id="authMessage" class="status" role="status">শুরু করতে লগইন করো অথবা নতুন অ্যাকাউন্ট তৈরি করো।</p></section>
+<section id="appPanel" class="hidden">
+<section class="panel"><h2>শেখার বিভাগ</h2><div class="grid"><div><label>শ্রেণি</label><select id="cls"><option value="8">অষ্টম</option><option value="9">নবম</option><option value="10">দশম</option></select></div><div><label>বিষয়</label><select id="sub"><option value="math">গণিত</option><option value="english">English</option><option value="bangla">বাংলা</option><option value="science">বিজ্ঞান</option></select></div><div><label>অধ্যায়</label><select id="chapter"></select></div></div>
+<div class="tabs"><button class="active" data-tab="notes">📖 নোট</button><button data-tab="formulas">🧮 সূত্র</button><button data-tab="quiz">✅ MCQ</button><button id="adminTab" data-tab="admin" class="hidden">🛠️ শিক্ষক প্যানেল</button></div><div id="status" class="status muted">অধ্যায় বেছে নাও।</div></section>
+<section id="notesPanel" class="panel"><h2>📖 অধ্যায়ভিত্তিক নোট</h2><div id="notes"></div></section>
+<section id="formulasPanel" class="panel hidden"><h2>🧮 সূত্র ও গুরুত্বপূর্ণ বিষয়</h2><div id="formulas"></div></section>
+<section id="quizPanel" class="panel hidden"><h2>✅ MCQ অনুশীলন</h2><div id="questions"></div><p id="score"></p><button id="retry" class="secondary">আবার চেষ্টা করো</button></section>
+<section id="adminPanel" class="panel hidden"><h2>🛠️ শিক্ষক/অ্যাডমিন প্যানেল</h2><div class="note"><b>শুধু অনুমোদিত অ্যাডমিনের জন্য।</b> এই প্যানেলে যোগ করা অধ্যায় Firestore-এ সংরক্ষিত হবে এবং অনুমোদিত ব্যবহারকারীরা অনলাইনে দেখতে পারবে।</div>
+<div class="grid"><div><label>শ্রেণি</label><select id="acls"><option value="8">অষ্টম</option><option value="9">নবম</option><option value="10">দশম</option></select></div><div><label>বিষয়</label><select id="asub"><option value="math">গণিত</option><option value="english">English</option><option value="bangla">বাংলা</option><option value="science">বিজ্ঞান</option></select></div><div><label>অধ্যায় সম্পাদনা</label><select id="achapter"></select></div></div>
+<div class="two"><div><label>অধ্যায়ের নাম</label><input id="atitle" placeholder="যেমন: বীজগাণিতিক রাশি"></div><div><label>সূত্র (প্রতি লাইনে একটি)</label><textarea id="aformulas"></textarea></div></div><label>নোট ও ব্যাখ্যা</label><textarea id="anote"></textarea><div class="tabs"><button id="saveChapter" class="green">অধ্যায় সংরক্ষণ</button><button id="newChapter" class="secondary">নতুন অধ্যায়</button><button id="deleteChapter" class="red">অধ্যায় মুছুন</button></div>
+<hr><h3>➕ MCQ যোগ</h3><label>প্রশ্ন</label><textarea id="qtext"></textarea><div class="grid"><div><label>ক</label><input id="opt0"></div><div><label>খ</label><input id="opt1"></div><div><label>গ</label><input id="opt2"></div><div><label>ঘ</label><input id="opt3"></div></div><div class="grid"><div><label>সঠিক উত্তর</label><select id="correct"><option value="0">ক</option><option value="1">খ</option><option value="2">গ</option><option value="3">ঘ</option></select></div><div><label>ব্যাখ্যা</label><input id="explain"></div></div><button id="addQuestion" class="green">MCQ যোগ করো</button><h3>এই অধ্যায়ের প্রশ্ন</h3><div id="adminQuestions"></div></section>
+<section class="panel"><h3>ℹ️ নোট</h3><p class="muted">এটি একটি প্রাথমিক অনলাইন সংস্করণ। বাস্তব শিক্ষার্থীদের ব্যবহারের আগে বর্তমান NCTB বই অনুযায়ী কনটেন্ট যাচাই করতে হবে। নিরাপদ নিয়ম ছাড়া কখনো Firebase database public করে দেবে না।</p></section>
+</section></main><footer>© Noman Education</footer>
+<script type="module" src="./app.js"></script>
+</body></html>
